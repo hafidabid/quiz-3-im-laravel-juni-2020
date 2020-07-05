@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends('tabelartikel')
 
 @push('scripts')
 

@@ -22,7 +22,10 @@ class ItemController extends Controller
         $artikel->slug = self::getslug($request->input('judul'));
         $artikel->save();
 
-        return view('suksesahoy');
+        $listartikel = ArtikelModel::all();
+        return view('suksesahoy',[
+            'listartikel'=>$listartikel
+        ]);
     }
 
     function getslug($title){
