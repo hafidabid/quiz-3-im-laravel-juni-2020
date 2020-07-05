@@ -42,15 +42,67 @@ class ItemController extends Controller
         return view('newarticle');
     }
 
-    function show(){
+    function show($id){
+        $anArtikel = ArtikelModel::find($id);
+        $kat = $anArtikel->tag;
+        $tagslist = array();
 
+        $stry = "";
+        for($x=0;$x<strlen($kat);$x++){
+            if($kat[$x]==',' ||$x==strlen($kat)-1){
+                array_push($tagslist,$stry);
+                $stry="";
+            }else{
+                $stry = $stry.$kat[$x];
+            }
+        }
+        return view('getartikel',[
+            "anArtikel"=>$anArtikel,
+            "tagslist"=>$tagslist
+        ]);
     }
     
-    function update(){
+    function update(Request $request,$id){
+        $anArtikel = ArtikelModel::find($id);
+        $anArtikel->judul = $request->input('judul');
+        $anArtikel->isi = $request->input('isi');
+        $anArtikel->tag = $request->input('tags');
+        $anArtikel->save();
+
+        $tagslist = array();
+        $anArtikel = ArtikelModel::find($id);
+        $kat = $anArtikel->tag;
+        $stry = "";
+        for($x=0;$x<strlen($kat);$x++){
+            if($kat[$x]==',' ||$x==strlen($kat)-1){
+                array_push($tagslist,$stry);
+                $stry="";
+            }else{
+                $stry = $stry.$kat[$x];
+            }
+        }
+        return view('getartikel',[
+            "anArtikel"=>$anArtikel,
+            "tagslist"=>$tagslist
+        ]);
 
     }
 
-    function destroy(){
+    function destroy($id){
+        $anArtikel = ArtikelModel::find($id);
+        $anArtikel->delete();
 
+        $listartikel = ArtikelModel::all();
+        return view('tabelartikel',[
+            'listartikel'=>$listartikel
+        ]);
+
+    }
+
+    function edit($id){
+        $anArtikel = ArtikelModel::find($id);
+        return view('editartikel',[
+            "anArtikel"=>$anArtikel
+        ]);
     }
 }

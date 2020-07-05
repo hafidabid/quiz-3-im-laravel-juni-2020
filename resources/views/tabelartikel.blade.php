@@ -13,7 +13,7 @@
                       <td class="sorting_1">{{$li->judul}}</td>
                       <td>{{$li->created_at}}</td>
                       <td>{{$li->updated_at}}</td>
-                      <td><a href="#" class="btn btn-google btn-block">open</a></td>
+                      <td><a href="/artikel/{{$li->id}}" class="btn btn-google btn-block">open</a></td>
                     </tr>
                     @endforeach
                     </tbody>
